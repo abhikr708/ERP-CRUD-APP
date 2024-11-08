@@ -7,7 +7,7 @@ const { manageLabours, addNewLabour, trackInTime, trackOutTime } = require("../c
 // creating the routes
 router.get("/manageLabours/:area", manageLabours);
 router.post('/addNewLabour', addNewLabour);
-router.post('/trackInTime/:labourId', trackInTime);
-router.post('/trackOutTime/:labourId', trackOutTime);
+router.post('/trackInTime/:uID', trackInTime);
+router.post('/trackOutTime/:uID', trackOutTime);
 
 module.exports = router;

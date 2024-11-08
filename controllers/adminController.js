@@ -1,5 +1,3 @@
-// adminController.js
-
 const User = require('../models/User');  // Assuming Sales Managers and Labours are stored in the User model
 const Labour = require('../models/Labour');
 
@@ -100,11 +98,12 @@ exports.getAllLabours = async (req, res) => {
 // Function to delete a Sales Manager by ID
 exports.deleteSalesManager = async (req, res) => {
     try {
-        const { id } = req.params;
-        await User.findByIdAndDelete(id);
+        const { uID } = req.params;
+        const result = await User.deleteOne({uID:uID});
         console.log("Sales manager deleted successfully");
         res.status(200).json({
             success: true,
+            data: result,
             message: "Sales Manager deleted successfully"
         });
     } catch (err) {
@@ -120,10 +119,11 @@ exports.deleteSalesManager = async (req, res) => {
 // Function to delete a Labour by ID
 exports.deleteLabour = async (req, res) => {
     try {
-        const { id } = req.params;
-        await Labour.findByIdAndDelete(id);
+        const { uID } = req.params;
+        const response = await Labour.deleteOne({uID:uID});
         res.status(200).json({
             success: true,
+            data: response,
             message: "Labour deleted successfully"
         });
     } catch (error) {

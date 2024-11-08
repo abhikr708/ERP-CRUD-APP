@@ -3,8 +3,10 @@ const app = express();
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 const dbConnect = require('./config/db');
-const possport = require('passport');
-const LocalStrategy =  require('passport-local').Strategy;
+
+// Authentication
+const passport = require('./auth');
+// const LocalStrategy =  require('passport-local').Strategy;
 
 // Load the config from env
 require('dotenv').config();
@@ -15,12 +17,18 @@ const logRequest = (req, res, next)=>{
     console.log(`${new Date().toLocaleString()}, Request Made to: ${req.originalUrl}`);
     next(); // move to the next phase
 }
+app.use(logRequest);
+
+// Intialize the passport
+app.use(passport.initialize());
+const localAuthMiddleWare = passport.authenticate('local', {session:false});
+
 
 // Establish connection to the database
 dbConnect();
 
 // _______Routes_______
-app.use(logRequest);
+
 app.get('/', (req, res)=>{
     res.send("WELCOME....");
 })

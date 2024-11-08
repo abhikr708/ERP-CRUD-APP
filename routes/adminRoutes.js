@@ -25,10 +25,10 @@ router.get('/getAllSalesManagers', getAllSalesManagers); // runs
 router.get('/getAllLabours', getAllLabours); //runs
 
 // Route to delete a Sales Manager by ID  
-router.delete('/deleteSalesManager/:id', deleteSalesManager);  //runs
+router.delete('/deleteSalesManager/:uID', deleteSalesManager);  //runs
 
 // Route to delete a Labour by ID
-router.delete('/deleteLabour/:id', deleteLabour); // 
+router.delete('/deleteLabour/:uID', deleteLabour); // 
 
 // Route to view locations of Sales Managers and Labours
 router.get('/viewLocations', viewLocations); //runs

@@ -58,8 +58,8 @@ exports.addNewLabour = async (req, res) => {
 // Function to track the in time of the labour
 exports.trackInTime = async (req, res) => {
     try {
-        const { labourId } = req.params; // Get the labour ID from the request
-        const labour = await Labour.findById(labourId);
+        const { uID } = req.params; // Get the labour ID from the request
+        const labour = await Labour.findOne({uID});
 
         if (!labour) {
             console.log("Error 404, Labour not found")
@@ -83,8 +83,8 @@ exports.trackInTime = async (req, res) => {
 // Function to track the out time of the labour
 exports.trackOutTime = async (req, res) => {
     try {
-        const { labourId } = req.params; // Get the labour ID from the request
-        const labour = await Labour.findById(labourId);
+        const { uID } = req.params; // Get the labour ID from the request
+        const labour = await Labour.findById({uID});
 
         if (!labour) {
             return res.status(404).json({ message: 'Labour not found' });
