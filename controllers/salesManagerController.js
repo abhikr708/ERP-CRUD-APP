@@ -1,6 +1,7 @@
 // import the database schema
-const Attendance = require('../models/Attendance');
 const Labour = require('../models/Labour');
+const User = require('../models/User');
+const Task = require("../models/Task");
 
 // Function to find labours within the Sales Manager Area
 exports.manageLabours = async (req, res) => {
@@ -59,7 +60,7 @@ exports.addNewLabour = async (req, res) => {
 exports.trackInTime = async (req, res) => {
     try {
         const { uID } = req.params; // Get the labour ID from the request
-        const labour = await Labour.findOne({uID});
+        const labour = await Labour.findOne({ uID });
 
         if (!labour) {
             console.log("Error 404, Labour not found")
@@ -72,11 +73,13 @@ exports.trackInTime = async (req, res) => {
 
         res.status(200).json({
             message: 'In-time recorded successfully',
-            inTime: response.inTime 
+            inTime: response.inTime
         });
     } catch (error) {
-        res.status(500).json({ message: 'Error recording in-time',
-        error: error.message });
+        res.status(500).json({
+            message: 'Error recording in-time',
+            error: error.message
+        });
     }
 };
 
@@ -84,7 +87,7 @@ exports.trackInTime = async (req, res) => {
 exports.trackOutTime = async (req, res) => {
     try {
         const { uID } = req.params; // Get the labour ID from the request
-        const labour = await Labour.findById({uID});
+        const labour = await Labour.findById({ uID });
 
         if (!labour) {
             return res.status(404).json({ message: 'Labour not found' });
@@ -94,15 +97,60 @@ exports.trackOutTime = async (req, res) => {
         labour.outTime = new Date();
         const response = await labour.save();
 
-        res.status(200).json({ 
+        res.status(200).json({
             message: 'Out-time recorded successfully',
-            outTime: response.outTime 
+            outTime: response.outTime
         });
     } catch (error) {
         res.status(500).json({
             message: 'Error recording out-time',
-            error: error.message 
+            error: error.message
         });
     }
 };
 
+
+// Function to add task
+exports.addOrUpdateTask = async (req, res) => {
+    try {
+        const { labourID } = req.params;
+        const { taskDescription, taskID, assignedOn, status, completionDate } = req.body;
+
+        // Find existing task record
+        let task = await Task.findOne({ taskID });
+
+        if (task) {
+            // Update existing task
+            task.taskDescription = taskDescription,
+                task.assignedOn = assignedOn,
+                task.status = status,
+                task.completionDate = completionDate
+        }
+        else {
+            // Create a new task
+            task = new Task({
+                labourID,
+                taskDescription,
+                taskID,
+                assignedOn,
+                status,
+                completionDate
+            });
+        }
+
+        const response = await task.save();
+        console.log("Task added successfully");
+        res.status(200).json({
+            success: true,
+            data: response,
+            message: 'Task added successfully'
+        });
+    } catch (error) {
+        console.log("Error addding the task");
+        res.status(500).json({
+            success: false,
+            error: error.message,
+            message: 'Error adding the task'
+        });
+    }
+}

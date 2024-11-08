@@ -29,7 +29,19 @@ const labourSchema = new mongoose.Schema(
         outTime: {
             type: Date,
             default: null
-        }
+        },
+        tasks: [
+            {
+                taskDescription: { type: String, required: true },
+                status: {
+                    type: String,
+                    enum: ['Pending', 'Partially Completed', 'Completed'],
+                    default: 'Pending'
+                },
+                assignedDate: { type: Date, default: Date.now },
+                completionDate: { type: Date }
+            }
+        ]
 
     }
 );

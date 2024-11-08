@@ -45,6 +45,10 @@ app.use('/admin', adminRoutes);
 const hrRoutes = require('./routes/hrRoutes');
 app.use('/hr', hrRoutes);
 
+// Labour routes
+const labourRoutes = require('./routes/labourRoutes');
+app.use('/labour', labourRoutes);
+
 // Listen to the port
 app.listen(PORT, ()=>{
     console.log(`Server started at PORT ${PORT}`)

@@ -3,7 +3,7 @@ const router = express.Router();
 const hrController = require('../controllers/hrController');
 
 // Import the modules
-const {recordAttendance, calculateAttendance, addOrUpdateSalary, viewSalary} = hrController
+const {recordAttendance, calculateAttendance, addOrUpdateSalary, viewSalary, calculateTask} = hrController
 
 // Route to mark attendace 
 router.post('/recordAttendance', recordAttendance)
@@ -17,7 +17,7 @@ router.post('/addOrUpdateSalary', addOrUpdateSalary);
 // Route to view an employee’s salary details by uID
 router.get('/viewSalary/:uID', viewSalary);
 
-// // Route to calculate the total payroll for all employees
-// router.get('/calculateTotalPayroll', calculateTotalPayroll);
+// Route to calculate the total tasks of the labour
+router.get('/calculateTask/:labourID', calculateTask);
 
 module.exports = router;
