@@ -29,13 +29,13 @@ dbConnect();
 
 // _______Routes_______
 
-app.get('/', (req, res)=>{
+app.get('/', localAuthMiddleWare, (req, res)=>{
     res.send("WELCOME....");
 })
 
 // Sales Manager Routes
 const salesManagerRoutes = require('./routes/salesManagerRoutes');
-app.use('/salesManager', salesManagerRoutes);
+app.use('/salesManager', localAuthMiddleWare, salesManagerRoutes);
 
 // Admin routes
 const adminRoutes = require('./routes/adminRoutes');
@@ -43,11 +43,11 @@ app.use('/admin', adminRoutes);
 
 // HR routes
 const hrRoutes = require('./routes/hrRoutes');
-app.use('/hr', hrRoutes);
+app.use('/hr', localAuthMiddleWare, hrRoutes);
 
 // Labour routes
 const labourRoutes = require('./routes/labourRoutes');
-app.use('/labour', labourRoutes);
+app.use('/labour', localAuthMiddleWare, labourRoutes);
 
 // Listen to the port
 app.listen(PORT, ()=>{

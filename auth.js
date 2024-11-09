@@ -3,11 +3,11 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('./models/User');
 
-passport.use(new LocalStrategy(async (email, password, done)=>{
+passport.use(new LocalStrategy(async (username, password, done)=>{
     try{
-        console.log('Received Credentials: ', email, password);
+        // console.log('Received Credentials: ', username, password);
         // Fetch the user data from the database
-        const user = await User.findOne({email});
+        const user = await User.findOne({email:username});
         // If user not found
         if(!user){
             console.log("User not found");
