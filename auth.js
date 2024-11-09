@@ -7,13 +7,14 @@ passport.use(new LocalStrategy(async (username, password, done)=>{
     try{
         // console.log('Received Credentials: ', username, password);
         // Fetch the user data from the database
-        const user = await User.findOne({email:username});
+        const user = await User.findOne({ email:username });
         // If user not found
         if(!user){
             console.log("User not found");
             return done(null, false, {message: 'Incorrect email'});
         }
-        const isPasswordMatch = user.password === password ? true : false;
+        // const isPasswordMatch = user.password === password ? true : false;
+        const isPasswordMatch = await user.comparePassword(password);
 
         // If password match
         if(isPasswordMatch){
